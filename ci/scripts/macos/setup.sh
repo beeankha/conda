@@ -2,6 +2,11 @@
 
 set -o errtrace -o pipefail -o errexit
 
-conda install -yq pip conda-build conda-verify
+echo "Initializing conda in dev mode..."
+echo "Factory config is:"
+grep -e "conda location" -e "conda version" -e "python version" <(conda info -a) | sed 's/^\s*/  /'
+conda install -yq pip conda-build conda-verify pytest
 conda update openssl ca-certificates certifi
-python -m conda init bash --dev
+eval "$(sudo /Users/runner/miniconda3/bin/python -m conda init bash --dev)"
+echo "Done! Now running:"
+grep -e "conda location" -e "conda version" -e "python version" <(conda info -a) | sed 's/^\s*/  /'
