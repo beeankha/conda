@@ -41,13 +41,14 @@ environment, please open a bug report at:
     else:
         raise e
 
+from . import main_config
 from . import main_create
 from . import main_export
 from . import main_list
 from . import main_remove
+from . import main_rename
 from . import main_update
-from . import main_config
-
+# ^^ We are importing the env-related modules here
 
 # TODO: This belongs in a helper library somewhere
 # Note: This only works with `conda-env` as a sub-command.  If this gets
@@ -61,12 +62,13 @@ def create_parser():
     p = ArgumentParser()
     sub_parsers = p.add_subparsers()
 
+    main_config.configure_parser(sub_parsers)
     main_create.configure_parser(sub_parsers)
     main_export.configure_parser(sub_parsers)
     main_list.configure_parser(sub_parsers)
     main_remove.configure_parser(sub_parsers)
+    main_rename.configure_parser(sub_parsers)
     main_update.configure_parser(sub_parsers)
-    main_config.configure_parser(sub_parsers)
 
     show_help_on_empty_command()
     return p
